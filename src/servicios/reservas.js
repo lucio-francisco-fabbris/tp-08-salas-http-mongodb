@@ -1,35 +1,44 @@
-function crearServicioReserva(datosIniciales) {
-  const reservas = [...datosIniciales];
+const Reserva = require("../modelos/reservas");
 
-  function listar() {
-    return reservas;
+function crearServicioReservas() {
+  async function listar(filtro = {}) {
+    const criterio = {};
+
+    if (filtro.sala) {
+      criterio.sala = filtro.sala;
+    }
+
+    return await Reserva.find(criterio);
   }
 
-  function buscarPorId(id) {
-    return reservas.find((reserva) => reserva.id === id);
+  async function obtenerPorId(id) {
+    return await Reserva.findById(id);
   }
 
-  function contar() {
-    return reservas.length;
+  async function contar() {
+    return await Reserva.countDocuments();
   }
 
-  function crear(datos) {
-    const nuevaReserva = {
-      id: reservas.length + 1,
-      ...datos,
+  async function crear(datos) {
+    const reservaLimpia = {
+      estudiante: datos.estudiante,
+      email: datos.email,
+      sala: datos.sala,
+      fecha: datos.fecha,
+      turno: datos.turno,
+      personas: datos.personas,
     };
 
-    reservas.push(nuevaReserva);
-
-    return nuevaReserva;
+    const nuevaReserva = new Reserva(reservaLimpia);
+    return await nuevaReserva.save();
   }
 
   return {
     listar,
-    buscarPorId,
+    obtenerPorId,
     contar,
     crear,
   };
 }
 
-module.exports = crearServicioReserva;
+module.exports = crearServicioReservas;

@@ -45,6 +45,14 @@ const reservaSchema = new mongoose.Schema(
         message: "El número de personas debe ser un número entero.",
       },
     },
+    estado: {
+      type: String,
+      default: "pendiente",
+      enum: {
+        values: ["pendiente", "confirmada"],
+        message: "El estado debe ser 'pendiente' o 'confirmada'.", 
+      },
+    },
   },
   {
     versionKey: false,
