@@ -50,7 +50,7 @@ const reservaSchema = new mongoose.Schema(
       default: "pendiente",
       enum: {
         values: ["pendiente", "confirmada"],
-        message: "El estado debe ser 'pendiente' o 'confirmada'.", 
+        message: "El estado debe ser 'pendiente' o 'confirmada'.",
       },
     },
   },

@@ -18,14 +18,17 @@ function crearControladorReservas(servicioReserva) {
     try {
       const { id } = req.params;
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).render("no-encontrado", { title: "Reserva no encontrada",
-          titulo: "Reservas no encontradas"
+        return res.status(404).render("no-encontrado", {
+          title: "Reserva no encontrada",
+          titulo: "Reservas no encontradas",
         });
       }
 
       const reserva = await servicioReserva.obtenerPorId(id);
       if (!reserva) {
-        return res.status(404).render("404", { titulo: "Reserva no encontrada" });
+        return res
+          .status(404)
+          .render("404", { titulo: "Reserva no encontrada" });
       }
 
       res.render("reservas/detalle", {

@@ -12,7 +12,6 @@ function crearApp(
   identificarSolicitud,
   medirDuracion,
 ) {
-
   const app = express();
 
   app.set("view engine", "ejs");
@@ -43,9 +42,12 @@ function crearApp(
 
   app.get("/", (req, res) => {
     res.redirect("/reservas");
-  })
-  
-  if (typeof reservasRouter === "function" || typeof reservasRouter?.use === "function") {
+  });
+
+  if (
+    typeof reservasRouter === "function" ||
+    typeof reservasRouter?.use === "function"
+  ) {
     app.use("/reservas", reservasRouter);
   }
 
@@ -57,12 +59,18 @@ function crearApp(
     if (req.originalUrl.startsWith("/api")) {
       return res.status(404).json({ error: "Endpoint no encontrado." });
     }
-    res.status(404).render("no-encontrado", { titulo: "Página no encontrada" }, (err, html) => {
-      if (err) {
-        return res.status(404).send("Página no encontrada");
-      }
-      res.render(html);
-    });
+    res
+      .status(404)
+      .render(
+        "no-encontrado",
+        { titulo: "Página no encontrada" },
+        (err, html) => {
+          if (err) {
+            return res.status(404).send("Página no encontrada");
+          }
+          res.render(html);
+        },
+      );
   });
 
   // eslint-disable-next-line no-unused-vars
